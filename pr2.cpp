@@ -1,3 +1,4 @@
+//since the number of iterations is taken to be 10000 the program will take time...to improve the time reduce the number of iterations in line number 66
 //Th, threshold_for_line, iterations need to be changed according to the input image
 #include<opencv2/opencv.hpp>
 #include <stdio.h>   
