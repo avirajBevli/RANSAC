@@ -9,8 +9,6 @@
 
 #include <opencv2/imgproc.hpp> // drawing shapes
 
-//# define M_PI 3.14159265358979323846
-
 using namespace std;
 using namespace cv;
 
@@ -103,12 +101,12 @@ int main()
 	medianBlur(image, blurred_image, k_blur);
 
 	namedWindow("original image");
-	namedWindow("canny image");
+	//namedWindow("canny image");
 
 	Canny( blurred_image, detected_edges, lowThreshold, (lowThreshold*ratio), kernel_size );
 
 	imshow("original image", image);
-	imshow("canny image", detected_edges);
+	//imshow("canny image", detected_edges);
 
 	//detected_edges mat is the canny edge image
 	vector<Point> detected_m_c;//vectot of all the (m,c) values of the final lines obtained by RANSAC
