@@ -8,9 +8,6 @@
 #include <opencv2/core/core.hpp>
 
 #include <opencv2/imgproc.hpp> // drawing shapes
-
-//# define M_PI 3.14159265358979323846
-
 using namespace std;
 using namespace cv;
 
@@ -33,47 +30,18 @@ int dist(vector<Point> Pts, int m, int c, int counter)
 
 Mat image = imread("pc.jpg", CV_LOAD_IMAGE_COLOR);
 Mat image_lines = imread("pc.jpg", CV_LOAD_IMAGE_COLOR);
-//Mat blurred_image = Mat::zeros(image.rows, image.cols, CV_8UC1);
-//Mat detected_edges = Mat::zeros(image.rows, image.cols, CV_8UC1);
 
 int main()
 {
-	/*int k_blur = 3; //for median blur	
-	int lowThreshold = 130;//for canny
-	int ratio = 3;//for canny
-	int kernel_size = 3; //for canny
-
-	medianBlur(image, blurred_image, k_blur);
-*/
 	namedWindow("original image");
-	/*namedWindow("canny image");*/
-
-	/*Canny( blurred_image, detected_edges, lowThreshold, (lowThreshold*ratio), kernel_size );
-*/
+	
 	imshow("original image", image);
-	/*imshow("canny image", detected_edges);
-*/
-	//detected_edges mat is the canny edge image
+	
 	vector<Point> detected_m_c;//vectot of all the (m,c) values of the final lines obtained by RANSAC
 	vector<Point> Pts;//vector of all the white detected pixels in the canny edge image
-	//vector<struct dataset> lines;
 
 	int r,c;
-	/*for(r=0;r<detected_edges.rows;r++)
-	{
-		for(c=0;c<detected_edges.cols;c++)
-		{
-			if(detected_edges.at<uchar>(r,c)==255)
-			{
-				Point pt_detected;
-				pt_detected.x = c;
-				pt_detected.y = r;
-				Pts.push_back(pt_detected);//pushed the white pixel into Pts vector
-				// /cout<<"("<<c<<","<<r<<")"<<"  ";
-			}
-		}
-	}
-*/
+	
 	for(r=0;r<image.rows;r++)
 	{
 		for(c=0;c<image.cols;c++)
@@ -94,7 +62,7 @@ int main()
 	cout << "\nThe number of white pixels is: "<<size;
 cout<<endl;
 
-	int iterations = 20;//the number of times we want to randomly test for a line...ideally we want a big number like 100 or above, but becoming computationally expensive 
+	int iterations = 10000;//the number of times we want to randomly test for a line...ideally we want a big number like 100 or above, but becoming computationally expensive 
 	int count;
 	
 	srand(time(0));
@@ -104,18 +72,10 @@ cout<<endl;
 		int pt1 = rand()%size;
 		int pt2 = rand()%size;
 		cout<<count<<"("<<Pts[pt1].x<<","<<Pts[pt1].y<<")"<<"    "<<"("<<Pts[pt2].x<<","<<Pts[pt2].y<<")"<<"    ";
-
-		//cout << "\nThe first is: "<<pt1;
-		//cout << "\nThe second is: "<<pt2;
 		int m,c;
 
 		vector<Point> consensus_set;
-		/*if(Pts[pt2].x - Pts[pt1].x == 0)
-		{
-			m = INT_MAX;
-			c = Pts[pt2].y - (m*Pts[pt2].x);
-		}
-*/
+		
 		if(Pts[pt2].x - Pts[pt1].x != 0)
 		{
 			m = (Pts[pt2].y - Pts[pt1].y)/(Pts[pt2].x - Pts[pt1].x);
@@ -123,8 +83,8 @@ cout<<endl;
 		}
 
 		int counter;
-		int Th = 1;//Th is the threshold error bound
-		int Thresh_for_line = 200;//Thresh_for_line is the threshold of inliers to classify as a line
+		int Th = 2;//Th is the threshold error bound
+		int Thresh_for_line = 600;//Thresh_for_line is the threshold of inliers to classify as a line
 
 		for(counter=0;counter<size;counter++)
 		{
