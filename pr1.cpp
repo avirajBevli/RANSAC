@@ -147,17 +147,10 @@ cout<<endl;
 		int pt2 = rand()%size;
 		cout<<count<<"("<<Pts[pt1].x<<","<<Pts[pt1].y<<")"<<"    "<<"("<<Pts[pt2].x<<","<<Pts[pt2].y<<")"<<"    ";
 
-		//cout << "\nThe first is: "<<pt1;
-		//cout << "\nThe second is: "<<pt2;
 		int m,c;
 
 		vector<Point> consensus_set;
-		/*if(Pts[pt2].x - Pts[pt1].x == 0)
-		{
-			m = INT_MAX;
-			c = Pts[pt2].y - (m*Pts[pt2].x);
-		}
-*/
+		
 		if(Pts[pt2].x - Pts[pt1].x != 0)
 		{
 			m = (Pts[pt2].y - Pts[pt1].y)/(Pts[pt2].x - Pts[pt1].x);
@@ -203,99 +196,13 @@ cout<<endl;
 	  	int m = detected_m_c[count].x;
 	  	int c = detected_m_c[count].y;
 	  	cout<<count<<"("<<m<<","<<c<<")"<<endl;
-/*	  	p1.y = image.rows;
-	  	p1.x = (int)((image.rows - c)/(float)m); 
 
-	    p2.y = 0;
-	  	p2.x = (int)(-c/(float)m);*/
-//////////////////////This is the code to draw the detected line/////////////////////////////
-	  	/*if(c>0 && c<image.rows)
-	  	{
-	  		if( ( m*(image.cols) + c  < image.rows ) && ( m*(image.cols) + c  > 0 ) )
-	  		{
-	  			p1.x = image.cols;
-			  	p1.y = m*(image.cols) + c;
-
-			    p2.x = 0;
-			  	p2.y = c;
-	  		}
-
-	  		else if( m*(image.cols) + c  > image.rows )
-	  		{
-	  			p1.x = 0;
-	  			p1.y = c;
-
-	  			p2.y = image.rows;
-	  			p2.x = (image.rows - c)/m;
-	  		}
-
-	  		else if( m*(image.cols) + c  < 0 )
-	  		{
-	  			p1.x = 0;
-	  			p1.y = c;
-
-	  			p2.y = 0;
-
-	  			if(m==0)
-	  				p2.x = 0;
-
-	  			else
-	  				p2.x = (-c/m);
-	  		}
-	  	}
-
-	  	else if(c<0)
-	  	{
-	  		if( ( m*(image.cols) + c  < image.rows ) && ( m*(image.cols) + c  > 0 ) )
-	  		{
-	  			p1.x = image.cols;
-			  	p1.y = m*(image.cols) + c;
-
-			    p2.y = 0;
-			    
-			    if(m==0)
-			    	p2.x = 0;
-			    else
-			  		p2.x = (-c/m);
-	  		}
-
-	  		else if( m*(image.cols) + c  > image.rows )
-	  		{
-	  			p1.y = image.rows;
-	  			p1.x = (image.rows - c)/m;
-
-	  			p2.y = 0;
-			  	p2.x = (-c/m);//obvio m is not equal to zero
-	  		}
-	  	}
-
-	  	else//c>img.rows
-	  	{
-	  		p1.y = image.rows;
-	  		if(m==0)
-	  			p1.x = 0;
-	  		else
-		  		p1.x = (image.rows - c)/m;
-
-	  		p1.x = image.cols;
-			p1.y = m*(image.cols) + c;
-	  	}
-
-	    line(image_lines, p1, p2, colorLine, thicknessLine);
-    }*/
 	  	drawLine(image_lines, m, c, thicknessLine, colorLine);
 	}	
 	    
 	//since we know the input image consists of 2 lines only, we now apply k means clustering using k=2
 ////////////////////Code for K-Means algorithm/////////////////////////
 	
-
-	/*struct dataset
-	{
-		Point p;
-		int cluster_no;
-	};*/
-
 	/////////we have assumed we know the numer of clusters beforehand, that is 2 in this case
 	//srand(time(0));
 	int rand1 = rand()%(no_lines-1);
@@ -304,11 +211,7 @@ cout<<endl;
 	{
 		rand2 = rand1+1;
 	}
-/*	int rand1 = 1;
-	int rand2 = 2;*/
-	////////////
-	////////////we need to modify that such that it is ensured that the values of c1 and c2 are different
-	////////////
+
  	cout << "\nThe value of c1 is: "<<rand1<<endl;
   	cout << "\nThe value of c2 is: "<<rand2<<endl;
 
@@ -381,203 +284,14 @@ cout<<endl;
 
 	}
 
-	/*Point P11, P21, P12, P22;
-  	P11.y = image.rows;
-  	P11.x = (int)((image.rows - c1y)/(float)c1x); 
-
-    P21.y = 0;
-  	P21.x = (int)(-c1y/(float)c1x);
-
-  	P12.y = image.rows;
-  	P12.x = (int)((image.rows - c2y)/(float)c2x); 
-
-    P22.y = 0;
-  	P22.x = (int)(-c2y/(float)c2x);
-
-/////////////the code to draw the line has been hard coded to draw only specific sort of lines/////////
-
-    line(image_lines, P11, P21, colorLine_clustered, thicknessLine_clustered);
-	line(image_lines, P12, P22, colorLine_clustered, thicknessLine_clustered);*/
-
 	cout<<"THe m value of the 1st cluster mean is: "<<c1x<<endl;
 	cout<<"THe c value of the 1st cluster mean is: "<<c1y<<endl;
 	cout<<"THe m value of the 2nd cluster mean is: "<<c2x<<endl;
 	cout<<"THe c value of the 2nd cluster mean is: "<<c2y<<endl;
 
 	int flag1, flag2;
-	/*if(c1y>0 && c1y<image.rows)
-  	{
-  		if( ( c1x*(image.cols) + c1y  < image.rows ) && ( c1x*(image.cols) + c1y  > 0 ) )
-  		{
-  			p1.x = image.cols;
-		  	p1.y = c1x*(image.cols) + c1y;
-
-		    p2.x = 0;
-		  	p2.y = c1y;
-		  	flag1 = 1;
-  		}
-
-  		else if( c1x*(image.cols) + c1y  > image.rows )
-  		{
-  			p1.x = 0;
-  			p1.y = c1y;
-
-  			p2.y = image.rows;
-  			p2.x = (image.rows - c1y)/c1x;
-  			flag1 = 2;
-  		}
-
-  		else if( c1x*(image.cols) + c1y  < 0 )
-  		{
-  			p1.x = 0;
-  			p1.y = c1y;
-
-  			p2.y = 0;
-
-  			if(c1x==0)
-  			{
-  				p2.x = 0;
-  				flag1 = 3;
-  			}
-
-  			else
-  			{
-  				p2.x = (-c1y/c1x);
-  				flag1 = 4;
-  			}
-  		}
-  	}
-
-  	else if(c1y<0)
-  	{
-  		if( ( c1x*(image.cols) + c1y  < image.rows ) && ( c1x*(image.cols) + c1y  > 0 ) )
-  		{
-  			p1.x = image.cols;
-		  	p1.y = c1x*(image.cols) + c1y;
-
-		    p2.y = 0;
-		    
-		    if(c1x==0){
-		    	p2.x = 0;
-		    	flag1 = 5;
-		    }
-
-		    else{
-		  		p2.x = (-c1y/c1x);
-		  		flag1 = 6;
-		    }
-  		}
-
-  		else if( c1x*(image.cols) + c1y  > image.rows )
-  		{
-  			p1.y = image.rows;
-  			p1.x = (image.rows - c1y)/c1x;
-
-  			p2.y = 0;
-		  	p2.x = (-c1y/c1x);//obvio m is not equal to zero
-		  	flag1 = 7;
-  		}
-  	}
-
-  	else//c>img.rows
-  	{
-  		p1.y = image.rows;
-  		if(c1x==0)
-  		{
-  			p1.x = 0;
-  			flag1 = 8;
-  		}
-
-  		else
-	  	{	
-	  		p1.x = (image.rows - c1y)/c1x;
-			flag1 = 9;
-		}
-  		
-  		p1.x = image.cols;
-		p1.y = c1x*(image.cols) + c1y;
-  	}
-
-	line(image_clustered_line, p1, p2, colorLine_clustered1, thicknessLine_clustered);
-
-*/
+	
 	drawLine(image_clustered_line, c1x, c1y, thicknessLine_clustered, colorLine_clustered1);
-
-
-	/*if(c2y>0 && c2y<image.rows)
-  	{
-  		if( ( c2x*(image.cols) + c2y  < image.rows ) && ( c2x*(image.cols) + c2y  > 0 ) )
-  		{
-  			p1.x = image.cols;
-		  	p1.y = c2x*(image.cols) + c2y;
-
-		    p2.x = 0;
-		  	p2.y = c2y;
-  		}
-
-  		else if( c2x*(image.cols) + c2y  > image.rows )
-  		{
-  			p1.x = 0;
-  			p1.y = c2y;
-
-  			p2.y = image.rows;
-  			p2.x = (image.rows - c2y)/c2x;
-  		}
-
-  		else if( c2x*(image.cols) + c2y  < 0 )
-  		{
-  			p1.x = 0;
-  			p1.y = c2y;
-
-  			p2.y = 0;
-
-  			if(c2x==0)
-  				p2.x = 0;
-
-  			else
-  				p2.x = (-c2y/c2x);
-  		}
-  	}
-
-  	else if(c2y<0)
-  	{
-  		if( ( c2x*(image.cols) + c2y  < image.rows ) && ( c2x*(image.cols) + c2y  > 0 ) )
-  		{
-  			p1.x = image.cols;
-		  	p1.y = c2x*(image.cols) + c2y;
-
-		    p2.y = 0;
-		    
-		    if(c2x==0)
-		    	p2.x = 0;
-		    else
-		  		p2.x = (-c2y/c2x);
-  		}
-
-  		else if( c2x*(image.cols) + c2y  > image.rows )
-  		{
-  			p1.y = image.rows;
-  			p1.x = (image.rows - c2y)/c2x;
-
-  			p2.y = 0;
-		  	p2.x = (-c2y/c2x);//obvio m is not equal to zero
-  		}
-  	}
-
-  	else//c>img.rows
-  	{
-  		p1.y = image.rows;
-  		if(c2x==0)
-  			p1.x = 0;
-  		else
-	  		p1.x = (image.rows - c2y)/c2x;
-
-  		p1.x = image.cols;
-		p1.y = c1x*(image.cols) + c2y;
-  	}
-
-	line(image_clustered_line, p1, p2, colorLine_clustered2, thicknessLine_clustered);
-*/
 	drawLine(image_clustered_line, c2x, c2y, thicknessLine_clustered, colorLine_clustered2);
 	
 	imshow("RANSAC lines waali image", image_lines);
